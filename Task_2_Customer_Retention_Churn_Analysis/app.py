@@ -31,12 +31,13 @@ def inject_css() -> None:
     """Apply the dashboard's compact, accessible visual system."""
     st.markdown("""<style>
     .stApp {background:#F8FAFC;color:#0F172A} [data-testid="stSidebar"] {background:linear-gradient(180deg,#0F172A,#1E3A5F)} [data-testid="stSidebar"] * {color:#F8FAFC}
-    .hero {padding:1.6rem 2rem;border-radius:18px;color:#fff;background:linear-gradient(120deg,#0F172A 0%,#1D4ED8 58%,#14B8A6 100%);margin:0 0 1.5rem;box-shadow:0 10px 28px rgba(15,23,42,.17)}
-    .hero h1 {font-size:2.2rem;margin:0;font-weight:750;letter-spacing:-.7px}.hero p {font-size:1.05rem;opacity:.88;margin:.35rem 0 0}
+    .hero {padding:1.65rem 2rem;border-radius:18px;color:#fff;background:linear-gradient(120deg,#0B1736 0%,#1D4ED8 56%,#0F9D9A 100%);margin:0 0 1.5rem;box-shadow:0 12px 30px rgba(15,23,42,.2);overflow:hidden}
+    .hero-kicker {font-size:.84rem;font-weight:700;letter-spacing:.03em;opacity:.92;margin-bottom:.55rem}.hero h1 {font-size:2.2rem;line-height:1.15;margin:0;font-weight:750;letter-spacing:-.7px}.hero-subtitle {font-size:1.02rem;line-height:1.55;max-width:900px;opacity:.9;margin:.65rem 0 1.05rem}.hero-meta {display:flex;flex-wrap:wrap;gap:.55rem .75rem}.hero-meta span {background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:.36rem .65rem;font-size:.82rem;font-weight:600}
+    @media (max-width: 700px) {.hero {padding:1.3rem 1.15rem;border-radius:15px}.hero h1 {font-size:1.65rem}.hero-subtitle {font-size:.94rem}.hero-meta {gap:.45rem}.hero-meta span {width:100%;border-radius:8px}}
     .kpi-card {background:#fff;border-radius:14px;padding:1rem 1.05rem;border:1px solid #E2E8F0;box-shadow:0 4px 12px rgba(15,23,42,.06);min-height:108px;transition:transform .2s,box-shadow .2s}.kpi-card:hover {transform:translateY(-3px);box-shadow:0 9px 20px rgba(37,99,235,.14)}
     .kpi-label {font-size:.78rem;color:#64748B;font-weight:650;text-transform:uppercase}.kpi-value {font-size:1.55rem;color:#0F172A;font-weight:750;margin-top:.35rem}
     .section-title {font-size:1.35rem;font-weight:750;margin:1.35rem 0 .2rem;color:#0F172A}.section-subtitle {color:#64748B;margin:0 0 .7rem}
-    .insight {padding:.7rem .9rem;margin:.38rem 0;background:#fff;border-radius:9px;border-left:4px solid #2563EB;box-shadow:0 2px 7px rgba(15,23,42,.05)}.footer {text-align:center;color:#64748B;padding:2rem 0 .4rem;font-size:.88rem}
+    .insight {padding:.7rem .9rem;margin:.38rem 0;background:#fff;border-radius:9px;border-left:4px solid #2563EB;box-shadow:0 2px 7px rgba(15,23,42,.05)}.footer {margin-top:2.25rem;padding:1.35rem 1rem;background:#F1F5F9;border-top:1px solid #CBD5E1;text-align:center;color:#475569;font-size:.82rem;line-height:1.7}.footer p {margin:.08rem 0}.footer strong {color:#1E3A8A}.footer .footer-stack {display:flex;flex-wrap:wrap;justify-content:center;gap:.2rem 1rem}@media (max-width:700px) {.footer {margin-top:1.5rem;padding:1.1rem .75rem;font-size:.76rem}.footer .footer-stack {flex-direction:column;gap:.05rem}}
     </style>""", unsafe_allow_html=True)
 
 
@@ -151,25 +152,41 @@ def main() -> None:
     st.sidebar.markdown("# 📊 Churn Navigator")
     st.sidebar.caption("Refine every metric and visual")
     columns = ["gender", "SeniorCitizen", "Partner", "Dependents", "Contract", "PaymentMethod", "InternetService"]
-    with st.sidebar.form("filter_form"):
-        selections = {
-            col: st.multiselect(
-                col.replace("SeniorCitizen", "Senior Citizen").replace("InternetService", "Internet Service"),
-                sorted(data[col].dropna().unique().tolist()),
-                default=sorted(data[col].dropna().unique().tolist()),
-                key=f"filter_{col}",
-            )
-            for col in columns
-        }
-        st.form_submit_button("Apply filters", use_container_width=True)
-        st.form_submit_button("↺ Reset filters", use_container_width=True, on_click=reset_filter_state)
+    # Changed: native sidebar widgets rerun Streamlit immediately on every selection.
+    # No submit button or filter-specific apply state is required.
+    selections = {
+        col: st.sidebar.multiselect(
+            col.replace("SeniorCitizen", "Senior Citizen").replace("InternetService", "Internet Service"),
+            sorted(data[col].dropna().unique().tolist()),
+            default=sorted(data[col].dropna().unique().tolist()),
+            key=f"filter_{col}",
+        )
+        for col in columns
+    }
+    # Retained: callback clears all filter widgets before Streamlit redraws the dashboard.
+    st.sidebar.button("↺ Reset filters", use_container_width=True, on_click=reset_filter_state)
     filtered = data.copy()
     for col, values in selections.items():
         filtered = filtered[filtered[col].isin(values)]
     if filtered.empty:
         st.warning("No customers match these filters. Reset or broaden a selection.")
         st.stop()
-    st.markdown("""<div class="hero"><h1>📈 Customer Retention & Churn Analysis Dashboard</h1><p>Interactive Analytics Dashboard · Customer behavior, retention health, and revenue risk in one view.</p></div>""", unsafe_allow_html=True)
+    # Updated header only: premium, responsive hero for the business analytics dashboard.
+    with st.container():
+        st.markdown(
+            """
+            <div class="hero">
+                <div class="hero-kicker">🎓 Future Intern – Data Science &amp; Analytics</div>
+                <h1>📊 Customer Retention &amp; Churn Analysis Dashboard</h1>
+                <p class="hero-subtitle">Interactive analytics dashboard for customer retention, churn prediction insights, customer lifetime value, cohort analysis, and business decision-making.</p>
+                <div class="hero-meta">
+                    <span>🗂 Dataset: IBM Telco Customer Churn (7,043 Customers)</span>
+                    <span>👨‍💻 Developed by: Madhu Sudhan</span>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
     churn_count = int(filtered["ChurnFlag"].sum())
     retention_rate = (1 - filtered["ChurnFlag"].mean()) * 100
     kpis = {"Total Customers": f"{len(filtered):,}", "Churn Customers": f"{churn_count:,}", "Retention Rate": f"{retention_rate:.1f}%", "Churn Rate": f"{100-retention_rate:.1f}%", "Average Monthly Charges": format_currency(filtered["MonthlyCharges"].mean()), "Average Total Charges": format_currency(filtered["TotalCharges"].mean()), "Average Tenure": f"{filtered['tenure'].mean():.1f} months", "Estimated Customer Lifetime Value": format_currency(filtered["EstimatedCLV"].mean()), "Revenue At Risk": format_currency(filtered["RevenueAtRisk"].sum())}
@@ -239,7 +256,20 @@ def main() -> None:
     downloads[0].download_button("Download filtered dataset (CSV)", filtered.drop(columns=["ChurnFlag"], errors="ignore").to_csv(index=False).encode("utf-8"), "filtered_customer_churn.csv", "text/csv", use_container_width=True)
     downloads[1].download_button("Download business report (PDF)", create_pdf(kpis, insights), "customer_churn_report.pdf", "application/pdf", use_container_width=True)
     downloads[2].download_button("Download KPIs (JSON)", json.dumps(kpis, indent=2).encode("utf-8"), "customer_churn_kpis.json", "application/json", use_container_width=True)
-    st.markdown('<div class="footer">Created by <b>Madhu Sudhan</b> · Future Intern</div>', unsafe_allow_html=True)
+    # Footer: positioned after all dashboard content so it remains at the page bottom.
+    st.markdown(
+        """
+        <footer class="footer">
+            <p><strong>© 2026 Madhu Sudhan</strong></p>
+            <p>🎓 Future Intern – Data Science &amp; Analytics Internship</p>
+            <div class="footer-stack">
+                <span>❤️ Built with Python, Streamlit, Plotly, Pandas, NumPy &amp; Scikit-learn</span>
+                <span>🗂 IBM Telco Customer Churn Dataset</span>
+            </div>
+        </footer>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 if __name__ == "__main__":

@@ -1,302 +1,241 @@
-# 📊 Customer Retention & Churn Analysis
+# Customer Retention & Churn Analysis Dashboard
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75?logo=plotly&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas&logoColor=white)
-![Seaborn](https://img.shields.io/badge/Seaborn-Visualization-4C72B0)
-![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?logo=powerbi&logoColor=black)
-![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)
+![Data Analytics](https://img.shields.io/badge/Data%20Analytics-Portfolio-0EA5E9)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Ready-8B5CF6)
+![License](https://img.shields.io/badge/License-MIT-22C55E)
 
-> An end-to-end, industry-style data analytics project analyzing customer churn for a telecom provider — from raw data to cohort analysis, customer lifetime value, churn trend modeling, an interactive dashboard, and an executive report. Built for the **Future Interns – Data Analytics Track (Task 2)**.
-
----
+An end-to-end telecom analytics portfolio project that turns the IBM Telco Customer Churn dataset into decision-ready retention intelligence. It combines a reproducible Jupyter notebook, an interactive Streamlit application, a browser dashboard, Power BI implementation guidance, exported visuals, and executive-ready reports.
 
 ## 📌 Project Overview
 
-Customer churn is one of the costliest problems a subscription-based business can face — acquiring a new customer typically costs far more than retaining an existing one. This project analyzes the **original IBM Telco Customer Churn dataset** (7,043 customers, 21 attributes) to understand *why* customers leave, *who* is most at risk, *how much they're worth over their lifetime*, and *what* the business can do about it.
+Customer churn erodes recurring revenue and increases acquisition costs. This project analyzes **7,043 telecom customers** to quantify churn, identify the customers and services most associated with attrition, and translate the evidence into retention actions.
 
-The project walks through a complete analytics workflow: data cleaning → exploratory data analysis → KPI calculation → **cohort analysis** → **customer lifetime value analysis** → **churn trend & risk segmentation** → 35 business insights → an interactive dashboard → an executive PDF report, mirroring the deliverables expected of a professional Data Analyst.
+The analysis covers customer churn and retention, tenure-derived cohort analysis, customer lifetime value (CLV), revenue at risk, and transparent risk segmentation. Business insights are delivered through a professional Streamlit dashboard and supporting report assets so stakeholders can filter the customer base, inspect drivers, and download results.
 
-## 🎯 Business Problem
+### Business Questions
 
-The company is losing a meaningful share of its customer base every month, directly impacting recurring revenue. Leadership needs answers to:
-- How severe is the churn problem, and what is it costing the business?
-- Which customer segments are most likely to churn, and why?
-- How does retention behave over time, by acquisition cohort and by tenure?
-- How much is a customer worth over their lifetime, and how does that vary by contract?
-- What retention strategies would have the highest impact for the lowest cost?
+- How large is the churn problem and how much recurring revenue is exposed?
+- Which contract, payment, service, demographic, and tenure groups have the greatest retention risk?
+- How does retention vary across estimated acquisition cohorts and customer lifetime stages?
+- Which customers have the greatest estimated lifetime value, and where should retention investment be focused?
 
-## 🎯 Objectives
+## ✨ Features
 
-- ✅ Clean and prepare the raw dataset for analysis
-- ✅ Explore churn patterns across demographics, contracts, billing, and services
-- ✅ Calculate key business KPIs (churn rate, retention rate, revenue at risk, etc.)
-- ✅ Perform cohort analysis (acquisition cohorts, retention matrix, cohort heatmap)
-- ✅ Estimate Customer Lifetime Value (CLV) and average customer lifetime by contract type
-- ✅ Model churn trends over time and build a rule-based high-risk segmentation
-- ✅ Generate 35 data-backed business insights and 11 prioritized recommendations
-- ✅ Build an interactive dashboard with working filters
-- ✅ Deliver a professional 15-page PDF business report
-
-## 🗂️ Dataset Information
-
-| Attribute | Detail |
-|---|---|
-| Source | Original **IBM Telco Customer Churn** dataset (`WA_Fn-UseC_-Telco-Customer-Churn.csv`), sourced from IBM's official public GitHub repository |
-| Rows | 7,043 customers |
-| Columns | 21 raw attributes (+ engineered features) |
-| Target variable | `Churn` (Yes/No) |
-| Churn rate | 26.54% (1,869 churned / 7,043 total) — matches the dataset's well-documented published statistics |
-
-No synthetic, modified, or substitute data is used anywhere in this project — the notebook, dashboard, and report are all built directly from the original CSV in `data/Telco_Customer_Churn.csv`.
-
-Key columns include:
-- **Demographics:** `gender`, `SeniorCitizen`, `Partner`, `Dependents`
-- **Account info:** `tenure`, `Contract`, `PaperlessBilling`, `PaymentMethod`, `MonthlyCharges`, `TotalCharges`
-- **Services:** `PhoneService`, `MultipleLines`, `InternetService`, `OnlineSecurity`, `OnlineBackup`, `DeviceProtection`, `TechSupport`, `StreamingTV`, `StreamingMovies`
-- **Target:** `Churn`
-
-> **Methodology note on cohort/trend analysis:** This dataset is a single cross-sectional snapshot with no signup-date field. Per IBM's own data dictionary, `tenure` is the number of months a customer has been with the company. Each customer's acquisition month is therefore derived as `(fixed snapshot date) − tenure` — the standard, widely-used approach for cohort/retention analysis on this exact dataset. This is documented explicitly in the notebook (Section 7) and is not a fabricated timestamp.
-
-## 📁 Folder Structure
-
-```
-Customer_Retention_Churn_Analysis/
-│
-├── data/
-│   ├── Telco_Customer_Churn.csv            # Original IBM Telco dataset (raw)
-│   └── Telco_Customer_Churn_Cleaned.csv    # Cleaned + feature-engineered dataset
-│
-├── notebook/
-│   └── Customer_Retention_Churn_Analysis.ipynb   # 12-section notebook, executes with 0 errors
-│
-├── dashboard/
-│   ├── Customer_Retention_Dashboard.html   # Interactive dashboard (real working filters)
-│   └── POWERBI_BUILD_GUIDE.md              # DAX measures + steps to build a native .pbix
-│
-├── images/                                 # 25 exported charts (high-res PNG)
-│
-├── reports/
-│   ├── Business_Report.pdf                 # 15-page executive report
-│   ├── kpis.json
-│   ├── insights.json                       # 35 business insights
-│   ├── recommendations.json                # 11 business recommendations
-│   ├── advanced_outputs.json               # cohort / CLV / risk summary data
-│   ├── cohort_monthly_summary.csv
-│   ├── cohort_quarterly_summary.csv
-│   ├── retention_matrix.csv
-│   ├── monthly_retention_curve.csv
-│   ├── clv_by_contract.csv
-│   └── risk_segments.csv
-│
-├── requirements.txt
-├── README.md
-├── LICENSE
-└── .gitignore
-```
+- ✅ Professional Streamlit dashboard with a responsive, modern UI
+- ✅ Multi-select interactive filters for customer, contract, billing, and service attributes
+- ✅ KPI cards for customer volume, churn, retention, charges, tenure, CLV, and revenue at risk
+- ✅ Churn and retention analysis by contract, payment method, internet service, and tenure
+- ✅ Tenure-derived cohort analysis, retention heatmap, matrix, and monthly retention table
+- ✅ Customer segmentation with transparent high-, medium-, and low-risk rules
+- ✅ Customer lifetime value analysis, including contract-wise CLV
+- ✅ Revenue-at-risk and risk-segment revenue analysis
+- ✅ Plotly interactive pie, bar, grouped bar, treemap, histogram, box, scatter, line, and heatmap charts
+- ✅ Automatically refreshed business insights and actionable recommendations
+- ✅ Filter-aware PDF business report, filtered CSV, and KPI JSON downloads
+- ✅ Static executive PDF report and precomputed analytical outputs
+- ✅ Power BI dashboard build guide with DAX measures
 
 ## 🛠️ Technologies Used
 
-| Category | Tools |
+| Area | Tools |
 |---|---|
-| Language | Python 3.10+ |
-| Data manipulation | Pandas, NumPy |
-| Visualization | Matplotlib, Seaborn, Plotly |
-| Machine learning utilities | Scikit-learn (LabelEncoder) |
-| Notebook environment | Jupyter |
-| Dashboarding | Interactive HTML/JS dashboard + Power BI build guide (DAX measures included) |
-| Reporting | ReportLab (PDF generation) |
+| Data analysis | Python, Pandas, NumPy |
+| Visualization | Plotly, Matplotlib, Seaborn |
+| Dashboard | Streamlit, HTML dashboard |
+| Analytics & modelling | Scikit-learn, rule-based risk segmentation |
+| Business intelligence | Power BI (DAX build guide) |
+| Research environment | Jupyter Notebook |
+| Reporting | ReportLab, JSON, CSV, PDF |
 
-## ⚙️ Installation
+## 🗂️ Project Structure
+
+```text
+Task_2_Customer_Retention_Churn_Analysis/
+├── app.py                                      # Streamlit dashboard
+├── requirements.txt                            # Python dependencies
+├── README.md                                   # Project documentation
+├── LICENSE                                     # MIT license
+├── data/
+│   ├── Telco_Customer_Churn.csv                # Raw IBM Telco data (7,043 × 21)
+│   └── Telco_Customer_Churn_Cleaned.csv        # Cleaned, engineered data (7,043 × 27)
+├── notebook/
+│   └── Customer_Retention_Churn_Analysis.ipynb # 12-section analysis notebook
+├── dashboard/
+│   ├── Customer_Retention_Dashboard.html       # Standalone interactive browser dashboard
+│   └── POWERBI_BUILD_GUIDE.md                  # DAX measures and Power BI build steps
+├── images/                                     # 22 exported analysis and dashboard charts
+│   ├── dashboard_preview.png
+│   ├── churn_distribution.png
+│   ├── cohort_heatmap.png
+│   ├── clv_by_contract.png
+│   └── ...
+└── reports/
+    ├── Business_Report.pdf                     # Executive business report
+    ├── kpis.json                               # Core KPI values
+    ├── insights.json                           # 35 data-backed insights
+    ├── recommendations.json                    # 11 retention recommendations
+    ├── advanced_outputs.json                   # CLV, cohort, and risk outputs
+    ├── clv_by_contract.csv
+    ├── cohort_monthly_summary.csv
+    ├── cohort_quarterly_summary.csv
+    ├── monthly_retention_curve.csv
+    ├── retention_matrix.csv
+    └── risk_segments.csv
+```
+
+## 🖥️ Dashboard Preview
+
+![Customer Retention Dashboard Preview](images/dashboard_preview.png)
+
+The Streamlit app in [`app.py`](app.py) recalculates every KPI and Plotly visual using the current filter selection. The standalone [`dashboard/Customer_Retention_Dashboard.html`](dashboard/Customer_Retention_Dashboard.html) provides an additional browser-based interactive experience, while [`dashboard/POWERBI_BUILD_GUIDE.md`](dashboard/POWERBI_BUILD_GUIDE.md) documents the DAX measures and layout needed to build a native Power BI report.
+
+## 📊 Key Performance Indicators
+
+| KPI | Value |
+|---|---:|
+| Total customers | 7,043 |
+| Churned customers | 1,869 |
+| Retention rate | **73.46%** |
+| Churn rate | **26.54%** |
+| Average monthly charges | $64.76 |
+| Average total charges | $2,279.73 |
+| Average tenure | 32.37 months |
+| Total monthly recurring revenue | $456,116.60 |
+| Monthly revenue associated with churn | **$139,130.85** |
+| Average estimated 24-month CLV | $1,554.28 |
+| Average lifetime of churned customers | 17.98 months |
+
+Source: [`reports/kpis.json`](reports/kpis.json) and [`reports/advanced_outputs.json`](reports/advanced_outputs.json).
+
+## 🧭 Dashboard Features
+
+| Section | What it delivers |
+|---|---|
+| Landing & sidebar | Clear executive framing plus filters for gender, senior citizen, partner, dependents, contract, payment method, and internet service |
+| KPI cards | Total/churned customers, retention and churn rates, average charges, tenure, estimated CLV, and revenue at risk |
+| Churn drivers | Distribution, contract, internet service, payment method, and customer-segment visuals |
+| Value & retention | Tenure histogram, monthly-charge box plot, charges scatter plot, correlation heatmap, and tenure retention trend |
+| Cohort analysis | Tenure-derived acquisition cohort heatmap and expandable monthly retention table |
+| CLV & segmentation | Average/highest/lowest CLV metrics, contract-wise CLV, risk segmentation, and risk-segment revenue |
+| Insight & action center | Sixteen dynamic insights plus focused retention actions based on active filters |
+| Download center | Filtered customer CSV, dashboard KPI JSON, and a PDF business report |
+
+> **Cohort methodology:** The IBM Telco data is a cross-sectional snapshot and does not include signup dates. The notebook and dashboard estimate acquisition month from tenure relative to a fixed January 2024 snapshot. This is clearly labelled as an estimate throughout the project.
+
+## 💡 Business Insights
+
+1. Month-to-month customers churn at **42.7%**, compared with **2.8%** for two-year contracts—the strongest observed churn driver.
+2. Fiber-optic customers have **41.9%** churn versus **19.0%** for DSL customers.
+3. Electronic-check customers churn at **45.3%**, the highest rate among payment methods.
+4. Senior citizens churn at **41.7%**, compared with **23.6%** for non-seniors.
+5. Customers without a partner churn at **33.0%** versus **19.7%** for customers with a partner.
+6. Customers without dependents churn at **31.3%**, more than twice the **15.4%** rate for customers with dependents.
+7. Customers in their first year churn at **47.4%**, while customers with five or more years of tenure churn at **6.6%**.
+8. Paperless-billing customers churn at **33.6%**, versus **16.3%** for paper-billing customers.
+9. Internet customers without Online Security churn at **41.8%**, versus **14.6%** for those with the service.
+10. Customers without Tech Support churn at **41.6%**, compared with **15.2%** for those with support.
+11. Churn falls from **21.4%** for customers with no add-on services to **5.3%** for customers with six add-ons.
+12. Churned customers paid **$74.44/month** on average, **$13.18** more than retained customers; higher charges alone are not delivering loyalty.
+13. Churned customers average **18.0 months** of tenure versus **37.6 months** for retained customers.
+14. Churned customers represent **$139,130.85** in monthly billings, equivalent to **$1.67M** annualized.
+15. Retention weakened from **96.5%** in the 2018 Q1 cohort to **43.2%** in the 2023 Q4 cohort.
+16. Estimated CLV is more than four times higher for two-year customers (**$3,723.45**) than month-to-month customers (**$930.70**).
+17. The precomputed Very High Risk tier churns at **65.2%**, versus **2.5%** for the Low Risk tier, validating the segmentation for targeted retention.
+
+The complete evidence set is available in [`reports/insights.json`](reports/insights.json).
+
+## 🎯 Business Recommendations
+
+1. Convert high-risk month-to-month customers to one- or two-year contracts using value-led incentives.
+2. Establish structured onboarding with 30-, 60-, and 90-day check-ins to protect new customers.
+3. Encourage electronic-check customers to adopt autopay with a targeted enrollment benefit.
+4. Audit fiber-optic pricing, reliability, and onboarding to understand its disproportionately high churn.
+5. Bundle Online Security, Online Backup, and Tech Support for customers with few or no add-ons.
+6. Equip retention teams with proactive contact lists for Very High Risk customers.
+7. Create a senior-citizen retention journey with simplified billing and dedicated support.
+8. Pair paperless billing with meaningful digital engagement instead of treating it as a passive preference.
+9. Prioritize retention offers using both churn risk and estimated CLV to improve return on spend.
+10. Review acquisition-cohort retention monthly to identify deterioration in acquisition or onboarding quality early.
+11. Test pause, downgrade, or save offers at cancellation intent for price-sensitive customers.
+
+Full recommendation detail is stored in [`reports/recommendations.json`](reports/recommendations.json).
+
+## 🗃️ Dataset
+
+The project uses the included **IBM Telco Customer Churn** dataset:
+
+| Attribute | Detail |
+|---|---|
+| Raw file | [`data/Telco_Customer_Churn.csv`](data/Telco_Customer_Churn.csv) |
+| Population | 7,043 telecom customers |
+| Raw features | 21 columns |
+| Target | `Churn` (`Yes` / `No`) |
+| Cleaned file | [`data/Telco_Customer_Churn_Cleaned.csv`](data/Telco_Customer_Churn_Cleaned.csv) |
+| Engineered output | 27 columns, including tenure/charge groups, add-on count, churn flag, and CLV estimate |
+
+The dataset covers demographics, account tenure, contract type, billing, payment method, phone/internet services, add-on services, monthly and total charges, and churn outcome.
+
+## 🚀 Installation
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/<your-username>/Customer_Retention_Churn_Analysis.git
-cd Customer_Retention_Churn_Analysis
-
-# 2. Create a virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate      # on Windows: venv\Scripts\activate
-
-# 3. Install dependencies
 pip install -r requirements.txt
+```
 
-# 4. Launch the notebook
+## ▶️ Run the Streamlit Dashboard
+
+From the project root, run:
+
+```bash
+streamlit run app.py
+```
+
+Streamlit will provide a local URL, typically `http://localhost:8501`.
+
+## 📓 Run the Notebook
+
+```bash
 jupyter notebook notebook/Customer_Retention_Churn_Analysis.ipynb
 ```
 
-## 📋 Requirements
+Open the notebook in Jupyter and use **Run All** to reproduce the cleaning, exploratory analysis, KPI calculation, cohort analysis, lifetime analysis, churn trends, insights, and recommendations.
 
-See [`requirements.txt`](requirements.txt) — core libraries: `pandas`, `numpy`, `matplotlib`, `seaborn`, `plotly`, `scikit-learn`, `jupyter`, `reportlab`.
+## 🖼️ Visual Gallery
 
-## 📊 Dashboard Preview
-
-![Dashboard Preview](images/dashboard_preview.png)
-
-The full dashboard (`dashboard/Customer_Retention_Dashboard.html`) is a **genuinely interactive** single-page dashboard — open it in any browser and use the Contract, Internet Service, Payment Method, Senior Citizen, and Tenure Group filters to see every KPI card and chart recompute live from the underlying customer-level data (no server, no external libraries required). Below the interactive KPI section are dedicated, always-visible sections for:
-- **📈 Cohort Analysis** — retention matrix and cohort heatmap
-- **💰 Customer Lifetime Metrics** — CLV and average lifetime by contract, high-risk segment churn
-- **📉 Churn Trend & Retention Trend** — churn by acquisition cohort over time, tenure-based churn curve, pooled retention curve
-
-**On the `.pbix` requirement:** Power BI Desktop is Windows-only proprietary software and cannot run in this Linux-based environment, so a native `.pbix` binary cannot be compiled here — there's no code path that produces a genuine one without the application itself. What's included instead is functionally equivalent and verified working: the interactive HTML dashboard above, plus [`dashboard/POWERBI_BUILD_GUIDE.md`](dashboard/POWERBI_BUILD_GUIDE.md), which contains copy-paste DAX measures, layout instructions, and a theme file so anyone with Power BI Desktop installed can produce the exact `.pbix` (with KPI cards, churn/retention rate, contract/internet/payment analysis, tenure analysis, and slicers) in about 15–20 minutes.
-
-## 📈 Visualizations
-
-| Churn Distribution | Contract vs Churn |
+| Churn distribution | Contract analysis |
 |---|---|
-| ![](images/churn_distribution.png) | ![](images/contract_analysis.png) |
+| ![Churn distribution](images/churn_distribution.png) | ![Contract analysis](images/contract_analysis.png) |
+| Cohort retention | Customer lifetime value |
+| ![Cohort heatmap](images/cohort_heatmap.png) | ![CLV by contract](images/clv_by_contract.png) |
+| Risk segments | Monthly churn trend |
+| ![Risk segments](images/risk_segments.png) | ![Monthly churn trend](images/monthly_churn_trend.png) |
+| Payment method | Correlation analysis |
+| ![Payment method churn](images/payment_method.png) | ![Correlation heatmap](images/correlation_heatmap.png) |
+| Retention matrix | Tenure analysis |
+| ![Retention matrix](images/retention_matrix_heatmap.png) | ![Tenure analysis](images/tenure_analysis.png) |
 
-| Tenure Analysis | Monthly Charges |
-|---|---|
-| ![](images/tenure_analysis.png) | ![](images/monthly_charges.png) |
+Additional exported visuals are available in [`images/`](images/), including demographic, internet-service, add-on-service, charge, and retention-curve analyses.
 
-| Payment Method vs Churn | Internet Service vs Churn |
-|---|---|
-| ![](images/payment_method.png) | ![](images/internet_service.png) |
+## 🔮 Future Improvements
 
-| Cohort Retention Matrix | Cohort Heatmap |
-|---|---|
-| ![](images/retention_matrix_heatmap.png) | ![](images/cohort_heatmap.png) |
-
-| CLV by Contract | Churn Rate by Risk Segment |
-|---|---|
-| ![](images/clv_by_contract.png) | ![](images/risk_segments.png) |
-
-| Correlation Heatmap |
-|---|
-| ![](images/correlation_heatmap.png) |
-
-*(Additional charts — demographics grid, monthly churn trend, tenure-based churn curve, monthly retention curve, add-on service impact, boxplots, countplots, and a pairplot — are available in `images/`, 25 charts in total.)*
-
-## 🧮 Cohort Analysis
-
-- Acquisition cohorts are derived from `tenure` relative to a fixed snapshot date (documented in the notebook).
-- The **retention matrix** shows what % of each quarterly cohort is still active at 0, 3, 6, …, 24 months since acquisition.
-- The **cohort heatmap** shows retention rate by acquisition year × month.
-- The **monthly retention curve** shows the pooled % of customers still active at each tenure month, from 0 to 72.
-- Finding: retention quality has structurally weakened across more recent acquisition cohorts — a trend the business should monitor as a standing metric, not just track aggregate churn.
-
-## 💰 Customer Lifetime Analysis
-
-| Contract | Avg Monthly Charge | Avg Lifetime (months) | Estimated CLV | Churn Rate |
-|---|---|---|---|---|
-| Two year | $60.77 | 61.3 | **$3,723.45** | 2.83% |
-| One year | $65.05 | 45.0 | $2,924.84 | 11.27% |
-| Month-to-month | $66.40 | 14.0 | $930.70 | 42.71% |
-
-Average customer lifetime among **churned** customers: **17.98 months**. CLV varies more than 4x by contract type — proof that contract length is as much a revenue lever as a retention lever.
-
-## 📉 Churn Trend Analysis
-
-- **Monthly churn trend**, tracked by derived acquisition cohort over the most recent 24 months.
-- **Tenure-based churn**, the exact-month churn curve (3-month rolling average), which peaks sharply in the first few months of service and decays steadily thereafter.
-- **High-risk segmentation**: a rule-based multi-factor risk score (contract type, tenure, payment method, service add-ons) splits customers into four tiers:
-
-| Risk Tier | Customers | Actual Churn Rate | Revenue at Risk/mo |
-|---|---|---|---|
-| Very High Risk | 1,528 | 65.18% | $117,240.80 |
-| High Risk | 1,756 | 32.92% | $127,767.90 |
-| Medium Risk | 1,640 | 14.70% | $105,221.80 |
-| Low Risk | 2,119 | 2.55% | $105,886.10 |
-
-## 💡 Business Insights (Sample of 35)
-
-1. **Contract type is the #1 churn driver** — month-to-month customers churn at 42.7% vs 2.8% for two-year contracts.
-2. **The first year is the highest-risk window** — new customers churn at ~47%, dropping to ~7% after 5 years.
-3. **Fiber optic subscribers churn more than DSL customers** (41.9% vs 19.0%), pointing to a pricing or service-quality gap.
-4. **Electronic check payers churn the most** among payment methods (45.3%) — a strong case for autopay migration.
-5. **CLV varies 4x by contract type** — two-year customers are worth ~$3,723 vs ~$931 for month-to-month customers.
-6. **Retention has weakened across more recent acquisition cohorts**, a trend worth monitoring monthly.
-7. A rule-based **risk score cleanly separates churn tiers with a 25x spread** (65.2% vs 2.5%), validating it as a targeting tool.
-
-👉 Full list of 35 data-backed insights available in [`reports/insights.json`](reports/insights.json) and inside the notebook (Section 10).
-
-## ✅ Business Recommendations (11)
-
-1. Convert month-to-month customers to annual or two-year plans
-2. Build a structured first-90-day onboarding journey
-3. Migrate electronic-check payers to autopay
-4. Bundle protective add-ons (Security, Backup, Tech Support) at a discount
-5. Launch a proactive win-back program for the "Very High Risk" segment
-6. Re-evaluate fiber optic pricing and onboarding experience
-7. Create a senior-citizen retention track
-8. Incentivize paperless billing adopters with better digital engagement
-9. Prioritize retention spend using CLV, not just churn probability
-10. Monitor cohort-level retention trends monthly, not just aggregate churn
-11. Test a "pause" or downgrade option before cancellation
-
-👉 Full detail for each recommendation in [`reports/recommendations.json`](reports/recommendations.json) and the notebook (Section 11).
-
-## 📊 Results (Key KPIs)
-
-| Metric | Value |
-|---|---|
-| Total Customers | 7,043 |
-| Churn Rate | 26.54% |
-| Retention Rate | 73.46% |
-| Average Monthly Charges | $64.76 |
-| Average Tenure | 32.4 months |
-| Monthly Revenue Lost to Churn | $139,130.85 |
-| Average Estimated CLV (two-year contract) | $3,723.45 |
-| Average Customer Lifetime (churned) | 17.98 months |
-
-Full KPI set: [`reports/kpis.json`](reports/kpis.json) · Cohort/CLV/risk detail: [`reports/advanced_outputs.json`](reports/advanced_outputs.json)
-
-## 🚀 Future Improvements
-
-- Train a supervised churn-prediction model (Logistic Regression, Random Forest, XGBoost) to score churn risk per customer in real time, replacing the rule-based risk score.
-- Incorporate customer support ticket data and NPS scores for richer behavioral signals.
-- Connect a live-refreshing Power BI dataset directly to a production CRM/billing system once a `.pbix` is built from the provided guide.
-- A/B test the proposed retention interventions and measure actual churn-rate impact.
-- Extend cohort analysis with formal survival analysis (Kaplan-Meier / Cox proportional hazards) for more rigorous lifetime modeling.
-
-## 👤 Author
-
-**Data Analytics Intern** — Future Interns Program
-Project: *Customer Retention & Churn Analysis (Task 2)*
+- Train and validate supervised churn models such as Logistic Regression, Random Forest, and gradient boosting.
+- Add model explainability, calibration monitoring, and customer-level risk scores.
+- Integrate CRM, support-ticket, NPS, and product-usage data for richer behavioural signals.
+- Connect a live CRM or billing source and schedule dashboard refreshes.
+- Build a native `.pbix` report from the included DAX guide.
+- Measure retention interventions with controlled A/B tests and incrementality analysis.
+- Extend lifetime analysis with survival methods such as Kaplan–Meier and Cox proportional hazards.
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE) — free to use, modify, and share with attribution.
+This project is licensed under the [MIT License](LICENSE).
 
----
+## 👤 Author
 
-⭐ If you found this project useful, consider starring the repository!
+**Madhu Sudhan**
 
-## Streamlit Dashboard
-
-The project includes a production-ready interactive dashboard in `app.py`. It uses the existing cleaned Telco dataset and complements the notebook, exported charts, Power BI guide, and reports without replacing them.
-
-### Features
-
-- Responsive dashboard with KPI cards, professional filters, and Plotly charts
-- Cohort retention analysis, CLV analysis, revenue-at-risk views, and risk segmentation
-- Automatic, filter-aware executive insights and recommendations
-- Downloads for the filtered CSV, KPI JSON, and a generated PDF business report
-
-### How to Run
-
-1. Install the required packages:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. Start the dashboard from the project root:
-
-   ```bash
-   streamlit run app.py
-   ```
-
-3. Open the local address shown by Streamlit (normally `http://localhost:8501`).
-
-### Screenshots
-
-_Add dashboard screenshots here after running the Streamlit app locally._
-
-### Deployment
-
-1. Push this repository to GitHub, including `app.py`, `requirements.txt`, and the `data/` folder.
-2. In [Streamlit Community Cloud](https://share.streamlit.io/), create a new app from the repository.
-3. Set the main file path to `app.py` and deploy. Streamlit installs dependencies from `requirements.txt` automatically.
+Future Intern – Data Science & Analytics
