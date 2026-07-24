@@ -1,0 +1,23 @@
+{
+  "Total Customers": 7043,
+  "Total Churned Customers": 1869,
+  "Active Customers": 5174,
+  "Customer Retention Rate (%)": 73.46,
+  "Churn Rate (%)": 26.54,
+  "Average Monthly Charges ($)": 64.76,
+  "Average Tenure (months)": 32.37,
+  "Average Total Charges ($)": 2279.73,
+  "Total Monthly Recurring Revenue ($)": 456116.6,
+  "Monthly Revenue Lost to Churn ($)": 139130.85,
+  "Average Estimated CLV ($, 24mo)": 1554.28,
+  "Contract Distribution (%)": {
+    "Month-to-month": 55.02,
+    "Two year": 24.07,
+    "One year": 20.91
+  },
+  "Internet Service Distribution (%)": {
+    "Fiber optic": 43.96,
+    "DSL": 34.37,
+    "No": 21.67
+  }
+}

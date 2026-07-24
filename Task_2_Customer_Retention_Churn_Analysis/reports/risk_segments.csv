@@ -1,0 +1,5 @@
+RiskTier,CustomerCount,ActualChurnRate,AvgMonthlyCharges,RevenueAtRisk
+Very High Risk,1528,65.18,76.73,117240.8
+High Risk,1756,32.92,72.76,127767.9
+Medium Risk,1640,14.7,64.16,105221.8
+Low Risk,2119,2.55,49.97,105886.1

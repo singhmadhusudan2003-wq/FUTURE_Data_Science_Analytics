@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Convert month-to-month customers to annual or two-year plans",
+    "detail": "Month-to-month customers churn at 42.7% and carry the lowest CLV ($931). Offer a modest discount or loyalty perk for switching to a 1- or 2-year contract."
+  },
+  {
+    "title": "Build a structured first-90-day onboarding journey",
+    "detail": "Churn is heavily concentrated in the first few months of tenure. Introduce proactive welcome calls, setup assistance, and scheduled 30/60/90-day check-ins to resolve friction before it turns into cancellation."
+  },
+  {
+    "title": "Migrate electronic-check payers to autopay",
+    "detail": "Electronic check is both the most common and highest-churn payment method. A small statement credit for enrolling in autopay (bank transfer or credit card) is a low-cost, high-leverage retention lever."
+  },
+  {
+    "title": "Bundle protective add-ons (Security, Backup, Tech Support) at a discount",
+    "detail": "Churn drops steadily as the number of subscribed add-on services increases. Package these three services at a bundled discount for internet subscribers who currently have none of them."
+  },
+  {
+    "title": "Launch a proactive win-back program for the 'Very High Risk' segment",
+    "detail": "Use the rule-based risk score to generate a weekly at-risk customer list for the retention team to contact before churn occurs, rather than after."
+  },
+  {
+    "title": "Re-evaluate fiber optic pricing and onboarding experience",
+    "detail": "Fiber optic subscribers churn more than double the rate of DSL subscribers despite paying a premium. Investigate price sensitivity, competitive pressure, or service-quality issues."
+  },
+  {
+    "title": "Create a senior-citizen retention track",
+    "detail": "Senior citizens churn at nearly double the rate of non-seniors. A simplified billing experience or dedicated support line could meaningfully improve retention in this segment."
+  },
+  {
+    "title": "Incentivize paperless billing adopters with better digital engagement",
+    "detail": "Paperless billing customers churn at roughly double the rate of paper-billing customers. Pair paperless enrollment with proactive digital engagement (app tips, usage summaries) to build stickiness."
+  },
+  {
+    "title": "Prioritize retention spend using CLV, not just churn probability",
+    "detail": "Combine the risk score with estimated CLV so retention offers are concentrated on high-value, high-risk customers rather than spread evenly, maximizing return on retention spend."
+  },
+  {
+    "title": "Monitor cohort-level retention trends monthly, not just aggregate churn",
+    "detail": "Cohort analysis shows retention quality has drifted over time. Track retention rate by acquisition cohort as a standing metric to catch quality regressions in acquisition or onboarding early."
+  },
+  {
+    "title": "Test a 'pause' or downgrade option before cancellation",
+    "detail": "For price-sensitive month-to-month customers, offering a temporary downgrade or pause at the point of cancellation intent may retain customers who would otherwise churn outright."
+  }
+]
