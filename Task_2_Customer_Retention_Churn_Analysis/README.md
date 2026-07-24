@@ -94,6 +94,49 @@ Task_2_Customer_Retention_Churn_Analysis/
 
 The Streamlit app in [`app.py`](app.py) recalculates every KPI and Plotly visual using the current filter selection. The standalone [`dashboard/Customer_Retention_Dashboard.html`](dashboard/Customer_Retention_Dashboard.html) provides an additional browser-based interactive experience, while [`dashboard/POWERBI_BUILD_GUIDE.md`](dashboard/POWERBI_BUILD_GUIDE.md) documents the DAX measures and layout needed to build a native Power BI report.
 
+## 🌐 Live Demo
+
+🚀 Streamlit App
+
+https://madhu-customer-retention-dashboard.streamlit.app/
+
+---
+
+
+## 🏠 Dashboard Home
+![Dashboard Home](images/1.png)
+
+---
+
+## 📊 KPI Dashboard
+![KPI Dashboard](images/2.png)
+
+---
+
+## 📈 Customer Churn Analysis
+![Customer Churn Analysis](images/3.png)
+
+---
+
+## 📉 Retention & Cohort Analysis
+![Retention & Cohort Analysis](images/4.png)
+
+---
+
+## 💡 Business Insights
+![Business Insights](images/5.png)
+
+---
+
+## 🎯 Recommendations Dashboard
+![Recommendations Dashboard](images/6.png)
+
+---
+
+## 🔗 GitHub Repository
+
+https://github.com/singhmadhusudan2003-wq/FUTURE_Data_Science_Analytics
+
 ## 📊 Key Performance Indicators
 
 | KPI | Value |
