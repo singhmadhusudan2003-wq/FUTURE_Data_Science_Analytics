@@ -263,3 +263,40 @@ This project is licensed under the [MIT License](LICENSE) — free to use, modif
 ---
 
 ⭐ If you found this project useful, consider starring the repository!
+
+## Streamlit Dashboard
+
+The project includes a production-ready interactive dashboard in `app.py`. It uses the existing cleaned Telco dataset and complements the notebook, exported charts, Power BI guide, and reports without replacing them.
+
+### Features
+
+- Responsive dashboard with KPI cards, professional filters, and Plotly charts
+- Cohort retention analysis, CLV analysis, revenue-at-risk views, and risk segmentation
+- Automatic, filter-aware executive insights and recommendations
+- Downloads for the filtered CSV, KPI JSON, and a generated PDF business report
+
+### How to Run
+
+1. Install the required packages:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Start the dashboard from the project root:
+
+   ```bash
+   streamlit run app.py
+   ```
+
+3. Open the local address shown by Streamlit (normally `http://localhost:8501`).
+
+### Screenshots
+
+_Add dashboard screenshots here after running the Streamlit app locally._
+
+### Deployment
+
+1. Push this repository to GitHub, including `app.py`, `requirements.txt`, and the `data/` folder.
+2. In [Streamlit Community Cloud](https://share.streamlit.io/), create a new app from the repository.
+3. Set the main file path to `app.py` and deploy. Streamlit installs dependencies from `requirements.txt` automatically.
