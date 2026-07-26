@@ -1,0 +1,329 @@
+// ============================================================================
+// DAX Measures — Marketing Funnel & Conversion Performance Analysis
+// ============================================================================
+// HOW TO USE:
+//   In Power BI Desktop, select fct_MarketingFunnel in the Fields pane →
+//   Table Tools → New Measure. Paste each block below as one measure
+//   (name = the text before the "=" on the first line). Organize them into
+//   a "_Measures" display folder for a clean Fields pane (Modeling →
+//   Display folder).
+//
+//   All measures assume the table is named `fct_MarketingFunnel` and, where
+//   noted, a date dimension named `dim_Date` related on `dim_Date[Date]` →
+//   `fct_MarketingFunnel[Date]`.
+// ============================================================================
+
+
+// ============================================================================
+// 1. CORE KPI CARD MEASURES
+// ============================================================================
+
+Total Impressions =
+SUM ( fct_MarketingFunnel[Impressions] )
+
+Total Clicks =
+SUM ( fct_MarketingFunnel[Clicks] )
+
+Total Landing Page Visits =
+SUM ( fct_MarketingFunnel[Landing Page Visits] )
+
+Total Leads =
+SUM ( fct_MarketingFunnel[Leads] )
+
+Total Qualified Leads =
+SUM ( fct_MarketingFunnel[Qualified Leads] )
+
+Total Customers =
+SUM ( fct_MarketingFunnel[Customers] )
+
+Total Revenue =
+SUM ( fct_MarketingFunnel[Revenue] )
+
+Total Cost =
+SUM ( fct_MarketingFunnel[Cost] )
+
+Total Profit =
+[Total Revenue] - [Total Cost]
+
+Overall CTR % =
+DIVIDE ( [Total Clicks], [Total Impressions], 0 )
+
+Overall Conversion Rate % =
+DIVIDE ( [Total Customers], [Total Impressions], 0 )
+
+Overall ROI % =
+DIVIDE ( [Total Revenue] - [Total Cost], [Total Cost], 0 )
+
+Cost per Lead =
+DIVIDE ( [Total Cost], [Total Leads], 0 )
+
+Cost per Click (CPC) =
+DIVIDE ( [Total Cost], [Total Clicks], 0 )
+
+Cost per Acquisition (CPA) =
+DIVIDE ( [Total Cost], [Total Customers], 0 )
+
+Average Order Value =
+DIVIDE ( [Total Revenue], [Total Customers], 0 )
+
+Lead to Qualified Rate % =
+DIVIDE ( [Total Qualified Leads], [Total Leads], 0 )
+
+Qualified to Customer Rate % =
+DIVIDE ( [Total Customers], [Total Qualified Leads], 0 )
+
+Click to Visit Rate % =
+DIVIDE ( [Total Landing Page Visits], [Total Clicks], 0 )
+
+Visit to Lead Rate % =
+DIVIDE ( [Total Leads], [Total Landing Page Visits], 0 )
+
+Revenue per Impression =
+DIVIDE ( [Total Revenue], [Total Impressions], 0 )
+
+
+// ============================================================================
+// 2. FUNNEL CHART MEASURES
+//    (Feed these six measures, in this order, into a Funnel visual's
+//    "Values" well — or use them with a unpivoted "Funnel Stage" table,
+//    see note at the bottom of this file.)
+// ============================================================================
+
+Funnel - Impressions = [Total Impressions]
+Funnel - Clicks = [Total Clicks]
+Funnel - Landing Page Visits = [Total Landing Page Visits]
+Funnel - Leads = [Total Leads]
+Funnel - Qualified Leads = [Total Qualified Leads]
+Funnel - Customers = [Total Customers]
+
+Funnel Stage Retention % =
+// Use inside a matrix/table visual with "Funnel Stage" and "Stage Order" on rows
+VAR CurrentStageValue = SELECTEDVALUE ( FunnelStages[Value] )
+RETURN CurrentStageValue
+
+Biggest Drop-off Stage =
+// Returns the funnel stage name with the largest percentage loss vs. the
+// previous stage. Requires the unpivoted FunnelStages helper table (see
+// bottom of file) with columns [Stage Order], [Stage Name], [Stage Value].
+VAR StageTable =
+    ADDCOLUMNS (
+        SUMMARIZE ( FunnelStages, FunnelStages[Stage Order], FunnelStages[Stage Name] ),
+        "@Value", CALCULATE ( SUM ( FunnelStages[Stage Value] ) )
+    )
+VAR RankedTable =
+    ADDCOLUMNS (
+        StageTable,
+        "@PrevValue",
+            VAR CurOrder = [Stage Order]
+            RETURN
+                CALCULATE (
+                    SUM ( FunnelStages[Stage Value] ),
+                    FunnelStages[Stage Order] = CurOrder - 1
+                )
+    )
+VAR WithDropoff =
+    FILTER (
+        ADDCOLUMNS ( RankedTable, "@Dropoff", DIVIDE ( [@PrevValue] - [@Value], [@PrevValue], 0 ) ),
+        [Stage Order] > 1
+    )
+RETURN
+    MAXX ( TOPN ( 1, WithDropoff, [@Dropoff], DESC ), [Stage Name] )
+
+
+// ============================================================================
+// 3. TIME INTELLIGENCE / REVENUE TREND MEASURES (require dim_Date)
+// ============================================================================
+
+Revenue MTD =
+TOTALMTD ( [Total Revenue], dim_Date[Date] )
+
+Revenue QTD =
+TOTALQTD ( [Total Revenue], dim_Date[Date] )
+
+Revenue YTD =
+TOTALYTD ( [Total Revenue], dim_Date[Date] )
+
+Revenue Previous Month =
+CALCULATE ( [Total Revenue], DATEADD ( dim_Date[Date], -1, MONTH ) )
+
+Revenue MoM Growth % =
+DIVIDE ( [Total Revenue] - [Revenue Previous Month], [Revenue Previous Month], 0 )
+
+Revenue Previous Period =
+CALCULATE ( [Total Revenue], DATEADD ( dim_Date[Date], -1, YEAR ) )
+
+Revenue YoY Growth % =
+DIVIDE ( [Total Revenue] - [Revenue Previous Period], [Revenue Previous Period], 0 )
+
+Rolling 30-Day Revenue =
+CALCULATE (
+    [Total Revenue],
+    DATESINPERIOD ( dim_Date[Date], MAX ( dim_Date[Date] ), -30, DAY )
+)
+
+
+// ============================================================================
+// 4. CHANNEL PERFORMANCE MEASURES
+// ============================================================================
+
+Channel CTR % =
+DIVIDE (
+    CALCULATE ( SUM ( fct_MarketingFunnel[Clicks] ) ),
+    CALCULATE ( SUM ( fct_MarketingFunnel[Impressions] ) ),
+    0
+)
+
+Channel ROI % =
+VAR ChRevenue = CALCULATE ( SUM ( fct_MarketingFunnel[Revenue] ) )
+VAR ChCost = CALCULATE ( SUM ( fct_MarketingFunnel[Cost] ) )
+RETURN DIVIDE ( ChRevenue - ChCost, ChCost, 0 )
+
+Best Channel by Revenue =
+VAR ChannelTable =
+    ADDCOLUMNS (
+        VALUES ( fct_MarketingFunnel[Marketing Channel] ),
+        "@Rev", [Total Revenue]
+    )
+RETURN
+    MAXX ( TOPN ( 1, ChannelTable, [@Rev], DESC ), fct_MarketingFunnel[Marketing Channel] )
+
+Worst Channel by Conversion =
+VAR ChannelTable =
+    ADDCOLUMNS (
+        VALUES ( fct_MarketingFunnel[Marketing Channel] ),
+        "@Conv", [Qualified to Customer Rate %]
+    )
+RETURN
+    MINX ( TOPN ( 1, ChannelTable, [@Conv], ASC ), fct_MarketingFunnel[Marketing Channel] )
+
+Channel Revenue Share % =
+DIVIDE ( [Total Revenue], CALCULATE ( [Total Revenue], ALL ( fct_MarketingFunnel[Marketing Channel] ) ), 0 )
+
+Channel Rank by Revenue =
+RANKX ( ALL ( fct_MarketingFunnel[Marketing Channel] ), [Total Revenue], , DESC )
+
+
+// ============================================================================
+// 5. CAMPAIGN PERFORMANCE MEASURES
+// ============================================================================
+
+Campaign ROI % =
+VAR CRevenue = CALCULATE ( SUM ( fct_MarketingFunnel[Revenue] ) )
+VAR CCost = CALCULATE ( SUM ( fct_MarketingFunnel[Cost] ) )
+RETURN DIVIDE ( CRevenue - CCost, CCost, 0 )
+
+Campaign Conversion Rate % =
+DIVIDE (
+    CALCULATE ( SUM ( fct_MarketingFunnel[Customers] ) ),
+    CALCULATE ( SUM ( fct_MarketingFunnel[Impressions] ) ),
+    0
+)
+
+Best Campaign by ROI =
+VAR CampaignTable =
+    ADDCOLUMNS (
+        VALUES ( fct_MarketingFunnel[Campaign] ),
+        "@ROI", [Campaign ROI %]
+    )
+RETURN
+    MAXX ( TOPN ( 1, CampaignTable, [@ROI], DESC ), fct_MarketingFunnel[Campaign] )
+
+Worst Campaign by ROI =
+VAR CampaignTable =
+    ADDCOLUMNS (
+        VALUES ( fct_MarketingFunnel[Campaign] ),
+        "@ROI", [Campaign ROI %]
+    )
+RETURN
+    MINX ( TOPN ( 1, CampaignTable, [@ROI], ASC ), fct_MarketingFunnel[Campaign] )
+
+Campaign Rank by ROI =
+RANKX ( ALL ( fct_MarketingFunnel[Campaign] ), [Campaign ROI %], , DESC )
+
+
+// ============================================================================
+// 6. ROI ANALYSIS MEASURES
+// ============================================================================
+
+ROI Status =
+VAR CurrentROI = [Overall ROI %]
+RETURN
+    SWITCH (
+        TRUE (),
+        CurrentROI >= 2, "High Performing",
+        CurrentROI >= 0.5, "Healthy",
+        CurrentROI >= 0, "Break-even Risk",
+        "Underperforming"
+    )
+
+Profit Margin % =
+DIVIDE ( [Total Profit], [Total Revenue], 0 )
+
+Marketing Efficiency Ratio =
+// Revenue generated per 1 unit of currency spent
+DIVIDE ( [Total Revenue], [Total Cost], 0 )
+
+
+// ============================================================================
+// 7. CONVERSION RATE ANALYSIS MEASURES
+// ============================================================================
+
+Conversion Rate - Impressions to Clicks % = [Overall CTR %]
+Conversion Rate - Clicks to Visits % = [Click to Visit Rate %]
+Conversion Rate - Visits to Leads % = [Visit to Lead Rate %]
+Conversion Rate - Leads to Qualified % = [Lead to Qualified Rate %]
+Conversion Rate - Qualified to Customers % = [Qualified to Customer Rate %]
+Conversion Rate - End to End % = [Overall Conversion Rate %]
+
+Conversion Rate vs Target =
+// Set your internal benchmark target here (example: 0.30% end-to-end)
+VAR Target = 0.003
+RETURN [Overall Conversion Rate %] - Target
+
+
+// ============================================================================
+// 8. FORMATTING HELPER MEASURES (for KPI cards showing compact numbers)
+// ============================================================================
+
+Total Impressions (Compact) =
+VAR V = [Total Impressions]
+RETURN
+    SWITCH (
+        TRUE (),
+        V >= 1000000, FORMAT ( DIVIDE ( V, 1000000 ), "0.00" ) & "M",
+        V >= 1000, FORMAT ( DIVIDE ( V, 1000 ), "0.00" ) & "K",
+        FORMAT ( V, "#,##0" )
+    )
+
+Total Revenue (Compact) =
+VAR V = [Total Revenue]
+RETURN
+    SWITCH (
+        TRUE (),
+        V >= 1000000, "₹" & FORMAT ( DIVIDE ( V, 1000000 ), "0.00" ) & "M",
+        V >= 1000, "₹" & FORMAT ( DIVIDE ( V, 1000 ), "0.00" ) & "K",
+        "₹" & FORMAT ( V, "#,##0" )
+    )
+
+
+// ============================================================================
+// NOTE — Building the unpivoted "FunnelStages" helper table
+// ============================================================================
+// The native Power BI Funnel visual wants one row per stage. Create this
+// as a calculated table (Modeling → New Table) so the Funnel visual and
+// the "Biggest Drop-off Stage" measure above both work out of the box:
+//
+// FunnelStages =
+// UNION (
+//     ROW ( "Stage Order", 1, "Stage Name", "Impressions",         "Stage Value", [Total Impressions] ),
+//     ROW ( "Stage Order", 2, "Stage Name", "Clicks",               "Stage Value", [Total Clicks] ),
+//     ROW ( "Stage Order", 3, "Stage Name", "Landing Page Visits",  "Stage Value", [Total Landing Page Visits] ),
+//     ROW ( "Stage Order", 4, "Stage Name", "Leads",                "Stage Value", [Total Leads] ),
+//     ROW ( "Stage Order", 5, "Stage Name", "Qualified Leads",      "Stage Value", [Total Qualified Leads] ),
+//     ROW ( "Stage Order", 6, "Stage Name", "Customers",            "Stage Value", [Total Customers] )
+// )
+//
+// Then build the Funnel visual with:
+//   Category = FunnelStages[Stage Name] (sorted by [Stage Order])
+//   Values   = FunnelStages[Stage Value]
+// ============================================================================

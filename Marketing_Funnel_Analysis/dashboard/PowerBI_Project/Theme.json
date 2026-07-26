@@ -1,0 +1,179 @@
+{
+  "name": "Marketing Funnel Dark Theme",
+  "dataColors": [
+    "#00E5A0",
+    "#3D8BFD",
+    "#A78BFA",
+    "#FFB454",
+    "#FF8C42",
+    "#FF5C5C",
+    "#4ECDC4",
+    "#F7B801",
+    "#7B61FF",
+    "#38BDF8"
+  ],
+  "background": "#0E1117",
+  "foreground": "#F5F6FA",
+  "tableAccent": "#00E5A0",
+  "good": "#00E5A0",
+  "neutral": "#FFB454",
+  "bad": "#FF5C5C",
+  "maximum": "#00E5A0",
+  "center": "#FFB454",
+  "minimum": "#FF5C5C",
+  "null": "#4A5568",
+  "textClasses": {
+    "callout": {
+      "fontSize": 32,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#F5F6FA"
+    },
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#F5F6FA"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#A0A6B1"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#F5F6FA"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": { "solid": { "color": "#161B26" } },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#2A2F3A" } },
+            "radius": 12
+          }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": { "solid": { "color": "#0E1117" } }
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": { "solid": { "color": "#F5F6FA" } },
+            "background": { "solid": { "color": "#00000000" } },
+            "fontSize": 13,
+            "bold": true,
+            "alignment": "left"
+          }
+        ],
+        "subTitle": [
+          {
+            "fontColor": { "solid": { "color": "#A0A6B1" } }
+          }
+        ],
+        "legend": [
+          {
+            "show": true,
+            "position": "Top",
+            "labelColor": { "solid": { "color": "#F5F6FA" } },
+            "fontSize": 9
+          }
+        ],
+        "categoryAxis": [
+          {
+            "show": true,
+            "labelColor": { "solid": { "color": "#A0A6B1" } },
+            "gridlineColor": { "solid": { "color": "#2A2F3A" } },
+            "axisType": "Categorical"
+          }
+        ],
+        "valueAxis": [
+          {
+            "show": true,
+            "labelColor": { "solid": { "color": "#A0A6B1" } },
+            "gridlineColor": { "solid": { "color": "#2A2F3A" } },
+            "gridlineShow": true
+          }
+        ],
+        "dataPoint": [
+          {
+            "defaultColor": { "solid": { "color": "#00E5A0" } }
+          }
+        ],
+        "labels": [
+          {
+            "color": { "solid": { "color": "#F5F6FA" } },
+            "fontSize": 9
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "color": { "solid": { "color": "#00E5A0" } },
+            "fontSize": 28,
+            "bold": true
+          }
+        ],
+        "categoryLabels": [
+          {
+            "color": { "solid": { "color": "#A0A6B1" } },
+            "fontSize": 11
+          }
+        ]
+      }
+    },
+    "multiRowCard": {
+      "*": {
+        "card": [
+          {
+            "backgroundColor": { "solid": { "color": "#1E2430" } },
+            "outlineColor": { "solid": { "color": "#2A2F3A" } },
+            "outlineWeight": 1,
+            "borderRadius": 12
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [
+          { "color": { "solid": { "color": "#161B26" } } }
+        ],
+        "items": [
+          {
+            "fontColor": { "solid": { "color": "#F5F6FA" } },
+            "background": { "solid": { "color": "#1E2430" } }
+          }
+        ],
+        "selection": [
+          {
+            "selectAllCheckboxEnabled": true,
+            "singleSelect": false
+          }
+        ]
+      }
+    },
+    "funnel": {
+      "*": {
+        "dataPoint": [
+          { "defaultColor": { "solid": { "color": "#00E5A0" } } }
+        ],
+        "percentBarLabel": [
+          { "color": { "solid": { "color": "#F5F6FA" } } }
+        ]
+      }
+    }
+  }
+}
