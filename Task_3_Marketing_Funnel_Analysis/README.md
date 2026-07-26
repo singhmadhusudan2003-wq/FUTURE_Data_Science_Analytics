@@ -1,4 +1,4 @@
-# 📊 Marketing Funnel & Conversion Performance Analysis
+# 📊 Task 3: Marketing Funnel & Conversion Performance Analysis
 
 ![Banner](assets/banner.png)
 
@@ -53,7 +53,7 @@ rather than random noise.
 
 Regenerate the dataset any time with:
 ```bash
-python generate_data.py   # located at the project root during generation
+python generate_data.py
 ```
 
 ---
@@ -61,7 +61,7 @@ python generate_data.py   # located at the project root during generation
 ## 📁 Folder Structure
 
 ```
-Marketing_Funnel_Analysis/
+Task_3_Marketing_Funnel_Analysis/
 ├── app.py                          # Main Streamlit dashboard
 ├── requirements.txt
 ├── README.md
@@ -85,13 +85,14 @@ Marketing_Funnel_Analysis/
 │   ├── charts.py                   # All Plotly chart builders
 │   └── helpers.py                  # Formatting + CSV/Excel/PDF export
 └── dashboard/
-    ├── README.md                    # Power BI overview — start here
     └── PowerBI_Project/
-        ├── PowerQuery_M.pq          # Power Query (M) data load & transform
-        ├── DAX_Measures.dax         # 35+ DAX measures (KPIs, Funnel, ROI, Conversion, etc.)
-        ├── Theme.json               # Real, importable Power BI theme
+        ├── README.md
+        ├── PowerQuery_M.pq
+        ├── DAX_Measures.dax
+        ├── Theme.json
         ├── Visual_Layout_Specification.md
-        └── Import_Instructions.md   # Step-by-step .pbix assembly guide
+        ├── Import_Instructions.md
+        └── Marketing_Funnel.pbix
 ```
 
 ---
@@ -100,7 +101,7 @@ Marketing_Funnel_Analysis/
 
 ```bash
 # 1. Clone / unzip the project, then move into it
-cd Marketing_Funnel_Analysis
+cd Task_3_Marketing_Funnel_Analysis
 
 # 2. (Recommended) create a virtual environment
 python -m venv venv
@@ -197,7 +198,7 @@ this project ships a **complete Power BI project package** in
 | `Import_Instructions.md` | Step-by-step guide — ~20 minutes to assemble the final `.pbix` |
 
 Everything needed is fully written out — no blank-canvas decisions left.
-See `dashboard/README.md` to get started.
+See `dashboard/PowerBI_Project/README.md` to get started.
 
 ---
 
@@ -206,7 +207,7 @@ See `dashboard/README.md` to get started.
 - Add predictive lead-scoring using Scikit-Learn (propensity to convert)
 - Connect to a live ad-platform API (Google Ads / Meta) for real-time data
 - Add cohort-based customer lifetime value (CLV) modeling
-- Deploy the Streamlit app to Streamlit Community Cloud / Docker
+- Enhance deployment with Docker and cloud infrastructure
 - Add anomaly detection for sudden CTR/ROI drops
 
 ---
@@ -220,3 +221,28 @@ See `dashboard/README.md` to get started.
 ## 📄 License
 
 Released under the [MIT License](LICENSE).
+
+---
+
+## 👨‍💻 Author
+
+**Madhu Sudhan**
+
+B.Tech CSE (AI & Data Science) Student
+
+🔗 GitHub:
+https://github.com/singhmadhusudan2003-wq
+
+🔗 LinkedIn:
+https://www.linkedin.com/in/madhu-sudhan-a241073b9
+
+🚀 This project was developed as part of the Future Intern Data Science & Analytics Internship.
+
+---
+
+## 🌐 Live Demo
+
+Streamlit Dashboard:
+https://madhu-marketing-funnel-analysis.streamlit.app/
+
+---
