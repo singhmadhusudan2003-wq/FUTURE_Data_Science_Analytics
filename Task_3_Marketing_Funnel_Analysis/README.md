@@ -224,6 +224,15 @@ Released under the [MIT License](LICENSE).
 
 ---
 
+## 🌐 Live Demo
+
+Streamlit Dashboard:
+https://madhu-marketing-funnel-analysis.streamlit.app/
+
+
+
+---
+
 ## 👨‍💻 Author
 
 **Madhu Sudhan**
@@ -237,12 +246,5 @@ https://github.com/singhmadhusudan2003-wq
 https://www.linkedin.com/in/madhu-sudhan-a241073b9
 
 🚀 This project was developed as part of the Future Intern Data Science & Analytics Internship.
-
----
-
-## 🌐 Live Demo
-
-Streamlit Dashboard:
-https://madhu-marketing-funnel-analysis.streamlit.app/
 
 ---
